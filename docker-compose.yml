@@ -1,0 +1,14 @@
+# Local MongoDB for Zapravka backend.
+# Usage:  docker compose up -d   (start)   /   docker compose down   (stop)
+services:
+  mongo:
+    image: mongo:7
+    container_name: zapravka-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - zapravka_mongo_data:/data/db
+
+volumes:
+  zapravka_mongo_data:
