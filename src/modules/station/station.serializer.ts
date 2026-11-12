@@ -33,6 +33,7 @@ export function serializeStation(station: any): any {
       gasCategory: {
         name_uz: cat?.name_uz ?? "",
         name_ru: cat?.name_ru ?? "",
+        kind: cat?.kind ?? "", // "benzine" | "diesel" | "gas" | "electric"
       },
     };
   });
@@ -44,14 +45,18 @@ export function serializeStation(station: any): any {
     available: gc.available,
     name_uz: gc.gasCategory.name_uz,
     name_ru: gc.gasCategory.name_ru,
+    kind: gc.gasCategory.kind,
   }));
 
+  // ISO weekdays (1=Mon ... 7=Sun). Legacy documents may still hold Sunday as 0:
+  // normalise on read too, so no stale row can surface as an unknown day.
+  const isoDay = (d: number) => (d === 0 ? 7 : d);
   const businessHours = [...(s.businessHours ?? [])]
-    .sort((a: any, b: any) => a.dayOfWeek - b.dayOfWeek)
+    .sort((a: any, b: any) => isoDay(a.dayOfWeek) - isoDay(b.dayOfWeek))
     .map((bh: any) => ({
     _id: bh._id?.toString(),
     stationId: id,
-    dayOfWeek: bh.dayOfWeek,
+    dayOfWeek: isoDay(bh.dayOfWeek),
     startTimeHour: bh.startTimeHour,
     startTimeMinute: bh.startTimeMinute,
     endTimeHour: bh.endTimeHour,

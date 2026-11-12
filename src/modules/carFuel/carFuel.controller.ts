@@ -21,6 +21,7 @@ function serializeCarFuel(cf: any): any {
           id: cat._id?.toString(),
           name_uz: cat.name_uz,
           name_ru: cat.name_ru,
+          kind: cat.kind,
         }
       : null,
   };
