@@ -7,7 +7,7 @@ export interface IStationGasCategory {
 }
 
 export interface IBusinessHour {
-  dayOfWeek: number; // 0=Sunday ... 6=Saturday
+  dayOfWeek: number; // ISO weekday: 1=Monday ... 7=Sunday (the client relies on this)
   startTimeHour: string;
   startTimeMinute: string;
   endTimeHour: string;

@@ -1,10 +1,10 @@
 import { GasCategory } from "../../models/GasCategory";
 import { IStationGasCategory, IBusinessHour } from "../../models/Station";
 
-/** Default 7-day business hours (08:00–23:00, all open). */
+/** Default 7-day business hours (08:00–23:00, all open). ISO weekdays: 1=Monday … 7=Sunday. */
 export function defaultBusinessHours(): IBusinessHour[] {
-  return Array.from({ length: 7 }, (_, dayOfWeek) => ({
-    dayOfWeek,
+  return Array.from({ length: 7 }, (_, i) => ({
+    dayOfWeek: i + 1,
     startTimeHour: "08",
     startTimeMinute: "00",
     endTimeHour: "23",

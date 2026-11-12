@@ -46,7 +46,9 @@ export function serializeStation(station: any): any {
     name_ru: gc.gasCategory.name_ru,
   }));
 
-  const businessHours = (s.businessHours ?? []).map((bh: any) => ({
+  const businessHours = [...(s.businessHours ?? [])]
+    .sort((a: any, b: any) => a.dayOfWeek - b.dayOfWeek)
+    .map((bh: any) => ({
     _id: bh._id?.toString(),
     stationId: id,
     dayOfWeek: bh.dayOfWeek,

@@ -3,6 +3,7 @@ import { createApp } from "./app";
 import { connectDB } from "./config/db";
 import { env, assertProductionSecrets } from "./config/env";
 import { ensureSuperAdmin } from "./bootstrap/ensureSuperAdmin";
+import { normalizeBusinessHours } from "./bootstrap/normalizeBusinessHours";
 
 async function main(): Promise<void> {
   assertProductionSecrets(); // fail fast on weak secrets in production
@@ -16,6 +17,7 @@ async function main(): Promise<void> {
 
   await connectDB();
   await ensureSuperAdmin();
+  await normalizeBusinessHours();
 
   const app = createApp();
   app.listen(env.port, () => {
